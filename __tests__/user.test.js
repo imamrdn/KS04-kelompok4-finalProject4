@@ -1,60 +1,66 @@
-const request = require('supertest')
-const { sequelize } = require('./../models/index');
-const { queryInterface } = sequelize;
-const app = require('../index')
+const request = require("supertest");
+const {sequelize} = require("./../models/index");
+const {queryInterface} = sequelize;
+const jwt = require("jsonwebtoken");
+const app = require("../index");
 
 const user = {
-    full_name : 'aswar', 
-    email : 'aswar@gmail.com', 
-    username : 'aswar', 
-    password : '12345678', 
-    profile_image_url : 'http://image.com/defaultphoto.png', 
-    age : 20, 
-    phone_number : '085123456789'
-}
-
+  full_name: "aswar",
+  email: "aswar@gmail.com",
+  username: "aswar",
+  password: "12345678",
+  profile_image_url: "http://image.com/defaultphoto.png",
+  age: 20,
+  phone_number: "085123456789",
+};
 
 beforeAll(async () => {
-  await queryInterface.bulkDelete('Users', null, {
+  await queryInterface.bulkDelete("Users", null, {
     truncate: true,
     restartIdentity: true,
-    cascade: true
-  })
-})
+    cascade: true,
+  });
+});
 
 afterAll(async () => {
   sequelize.close();
-})
+});
 
-describe('register', () => {
-    test('should suceess', async () => {
-        const {body} = await request(app)
-            .post('/users/register')
-            .send(user)
-            .expect(201)
-            expect(body).not.toBeNull()
-            expect(body.User).toEqual({full_name : user.full_name, email : user.email, username : user.username, 
-                profile_image_url : user.profile_image_url, age : user.age, phone_number : user.phone_number})
-            expect(body.User.email).toEqual(expect.objectContaining(/^@/))
-            expect(body.User.profile_image_url).toEqual(expect.objectContaining(/^http|https/))
-    })
+let token = "";
+let userId = "";
+describe("User Sukses", () => {
+  it("Register", async () => {
+    const res = await request(app).post("/users/register").send(user);
+    expect(res.statusCode).toBe(201);
+  });
 
-    test('should fail', async () => {
-        const {body} = await request(app)
-            .post('/users/register')
-            .send(user)
-            .expect(400)
-            expect(body).not.toBeNull()
-            expect(body).toEqual({message : "Email Already Registered!"})
-    })
-})
+  it("Login", async () => {
+    const res = await request(app).post("/users/login").send({
+      email: user.email,
+      password: user.password,
+    });
+    expect(res.statusCode).toBe(200);
+    token = res._body.token;
+    userId = jwt.decode(token);
+    userId = userId.id;
+  });
 
-describe('login', () => {
-    test('should suceess', async () => {
-        const {body} = await request(app)
-            .post('/users/login')
-            .send({email : user.email, password : user.password})
-            .expect(200)
-            expect(body).not.toBeNull()
-    })
-})
+  it("Update", async () => {
+    const res = await request(app)
+      .put(`/users/${userId}`)
+      .set("x-access-token", token)
+      .send({
+        username: "Bambang",
+      });
+    expect(res.statusCode).toBe(201);
+  });
+
+  // it("Delete", async () => {
+  //   const res = await request(app)
+  //     .delete(`/users/${userId}`)
+  //     .set("x-access-token", token);
+  //   expect(res.statusCode).toBe(200);
+  // });
+});
+
+describe("User Error", () => {});
