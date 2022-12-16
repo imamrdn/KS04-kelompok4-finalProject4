@@ -171,7 +171,7 @@ describe('GET /socialmedias', () => {
 //DELETE socialMedia
 describe('DELETE /socialmedias', () => {
     //fail 1
-    test('should return HTTP status code 200', async () => {
+    test('should return HTTP status code 303', async () => {
         const { body } = await request(app)
         .delete('/socialmedias/10')
         .set('x-access-token', `${userToken}`)
