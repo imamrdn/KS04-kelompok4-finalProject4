@@ -212,4 +212,3 @@ describe('DELETE /socialmedias', () => {
         expect(body).toEqual({message : 'Your sosial media has been successfully deleted'})
     })
 })
-

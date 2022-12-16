@@ -1,0 +1,108 @@
+// const request = require("supertest");
+// const {sequelize} = require("./../models/index");
+// const {queryInterface} = sequelize;
+// const jwt = require("jsonwebtoken");
+// const app = require("../index");
+
+// const user = {
+//   full_name: "aswar",
+//   email: "aswar@gmail.com",
+//   username: "aswar",
+//   password: "12345678",
+//   profile_image_url: "http://image.com/defaultphoto.png",
+//   poster_image_url: "http://image.com/defaultphoto.png",
+//   age: 20,
+//   phone_number: "085123456789",
+// };
+
+// beforeAll(async () => {
+//   await queryInterface.bulkDelete("Photos", null, {
+//     truncate: true,
+//     restartIdentity: true,
+//     cascade: true,
+//   });
+//   await request(app).post("/users/register").send(user);
+// });
+
+// afterAll(async () => {
+//   sequelize.close();
+// });
+
+// describe("Photo Sukses", () => {
+//   it("add photo", async () => {
+//     let token = await request(app)
+//       .post("/users/login")
+//       .send({
+//         email: user.email,
+//         password: user.password,
+//       })
+//       .then((result) => {
+//         return result._body.token;
+//       });
+//     let decodeToken = await jwt.decode(token);
+//     let id = decodeToken.id;
+//     const res = await request(app)
+//       .post(`/photos/`)
+//       .set("x-access-token", token)
+//       .send({
+//         title: "ini judul",
+//         caption: "ini caption",
+//         poster_image_url: "https://iniurl.com",
+//         UserId: id,
+//       });
+//     expect(res.statusCode).toBe(201);
+//   });
+//   it("read photo", async () => {
+//     let token = await request(app)
+//       .post("/users/login")
+//       .send({
+//         email: user.email,
+//         password: user.password,
+//       })
+//       .then((result) => {
+//         return result._body.token;
+//       });
+//     const res = await request(app).get("/photos/").set("x-access-token", token);
+//     expect(res.statusCode).toBe(200);
+//   });
+//   it("update photo", async () => {
+//     let token = await request(app)
+//       .post("/users/login")
+//       .send({
+//         email: user.email,
+//         password: user.password,
+//       })
+//       .then((result) => {
+//         return result._body.token;
+//       });
+//     let decodeToken = await jwt.decode(token);
+//     let id = decodeToken.id;
+//     console.log(id);
+//     const res = await request(app)
+//       .put(`/photos/${id}`)
+//       .set("x-access-token", token)
+//       .send({
+//         title: "title baru",
+//         caption: "caption baru",
+//         poster_image_url: "http://urlBaru.com",
+//       });
+//     expect(res.statusCode).toBe(201);
+//   });
+//   it("delete photo", async () => {
+//     let token = await request(app)
+//       .post("/users/login")
+//       .send({
+//         email: user.email,
+//         password: user.password,
+//       })
+//       .then((result) => {
+//         return result._body.token;
+//       });
+//     let decodeToken = await jwt.decode(token);
+//     let id = decodeToken.id;
+//     const res = await request(app)
+//       .delete(`/photos/${id}`)
+//       .set("x-access-token", token);
+//     expect(res.statusCode).toEqual(200);
+//   });
+// });

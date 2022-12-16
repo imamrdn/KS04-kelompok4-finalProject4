@@ -24,14 +24,13 @@ const userUpdate = {
 }
 let Token = '' 
 
-
 beforeAll(async () => {
-  await queryInterface.bulkDelete('Users', null, {
+  await queryInterface.bulkDelete("Users", null, {
     truncate: true,
     restartIdentity: true,
-    cascade: true
-  })
-})
+    cascade: true,
+  });
+});
 
 afterAll(async () => {
   sequelize.close();

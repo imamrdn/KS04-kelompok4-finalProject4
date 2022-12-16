@@ -1,14 +1,14 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "12345678",
-    "database": "database_development_2",
+    "username": "thouka",
+    "password": "180618",
+    "database": "database_development_3",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "12345678",
+    "username": "thouka",
+    "password": "180618",
     "database": "database_test_2",
     "host": "127.0.0.1",
     "dialect": "postgres"
