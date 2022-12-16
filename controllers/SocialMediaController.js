@@ -6,7 +6,6 @@ class SocialMediaController {
         try {
             const {name, social_media_url} = req.body
             const socialMedia = await Models.SocialMedia.create({name, social_media_url, UserId : id})
-             console.log(socialMedia)
             return res.status(201).json({
                 social_media : socialMedia
             })
