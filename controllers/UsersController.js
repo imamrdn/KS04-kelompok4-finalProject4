@@ -55,7 +55,7 @@ class UsersController {
         const {id} = req.user
         const {usersId} = req.params
         try {
-            if(id != usersId) return res.status(400).json({message :  "Tidak punya akses"})
+            if(id != usersId) return res.status(400).json({message : "Tidak punya akses"})
             await Models.User.update(req.body, {where : {id : id}})
             const User = await Models.User.findOne({where : {id :id} })
             return res.status(201).json({

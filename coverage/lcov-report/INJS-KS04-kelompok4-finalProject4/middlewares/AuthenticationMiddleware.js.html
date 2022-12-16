@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.42% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/14</span>
+                <span class='fraction'>13/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -81,39 +81,39 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const {verify} = require('../helpers/Jwt')
+<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const {verify} = require('../helpers/Jwt')
 &nbsp;
 const Models = require('../models/index')
 &nbsp;
-async function <span class="fstat-no" title="function not covered" >authenticationMiddleware </span>(req, res, next){
-<span class="cstat-no" title="statement not covered" >   try {</span>
-     const authHeader = <span class="cstat-no" title="statement not covered" >req.get("x-access-token")</span>
-<span class="cstat-no" title="statement not covered" >    if(!authHeader) <span class="cstat-no" title="statement not covered" >return res.status(401).json("You are not authenticated")</span></span>
-    const {id, email } = <span class="cstat-no" title="statement not covered" >verify(authHeader)</span>
-    const User = <span class="cstat-no" title="statement not covered" >await Models.User.findOne({ where: { id, email }, attributes : ['id', 'email']})</span>
-<span class="cstat-no" title="statement not covered" >    if(!User) <span class="cstat-no" title="statement not covered" >return res.status(403).json("Token is not valid!")</span></span>
-<span class="cstat-no" title="statement not covered" >    req.user = {id}</span>
-<span class="cstat-no" title="statement not covered" >    next()</span>
+async function authenticationMiddleware (req, res, next){
+   try {
+     const authHeader = req.get("x-access-token")
+    if(!authHeader) return res.status(401).json("You are not authenticated")
+    const {id, email } = verify(authHeader)
+    const User = await Models.User.findOne({ where: { id, email }, attributes : ['id', 'email']})
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(!User) <span class="cstat-no" title="statement not covered" >return res.status(403).json("Token is not valid!")</span>
+    req.user = {id}
+    next()
    } catch (err) {
-<span class="cstat-no" title="statement not covered" >    return res.status(500).json(`${err.message}. Please try again`)</span>
+    return res.status(500).json(`${err.message}. Please try again`)
    }
 }
 &nbsp;
@@ -124,7 +124,7 @@ module.exports = authenticationMiddleware</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-06T13:16:56.547Z
+                at 2022-12-16T11:20:55.520Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
